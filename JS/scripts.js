@@ -36,7 +36,9 @@ function Clock() {
         mode = "Session", //Keeps track of what mode we're in - session or break
         active = false, //Keeps track of wether or not the clock is running or not
         _this = this, //Reference to the Clock itself 
-        timer; //Referance to the interval that we set up to make the timer run
+        timer, //Reference to the interval that we set up to make the timer run
+        startAudio = new Audio("../assets/start.mp3"),
+        endAudio = new Audio("../assets/end.mp3");
 
     //Display Functions
 
@@ -155,6 +157,7 @@ function Clock() {
             if (sessionCount === 0) {
                 sessionCount = 1;
                 this.displaySessionCount();
+                startAudio.play();
             }
             $(".time-start").text("Pause");
             timer = setInterval(function () {
@@ -178,12 +181,14 @@ function Clock() {
                     currentTime = breakTime;
                     startTime = breakTime;
                     this.displaySessionCount();
+                    endAudio.play();
                 } else {
                     mode = "Session";
                     currentTime = sessionTime;
                     startTime = sessionTime;
                     sessionCount++;
                     this.displaySessionCount();
+                    startAudio.play()
                 }
             }
         }
